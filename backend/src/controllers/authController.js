@@ -4,7 +4,6 @@ import User from "../models/userModel.js";
 import path from "path";
 import dotenv from "dotenv";
 
-// Da bi `path.resolve` radio ispravno, koristi relativne putanje od `server.js`
 dotenv.config({ path: path.resolve("src/.env") });
 
 const jwtSecret = process.env.JWT_SECRET;
