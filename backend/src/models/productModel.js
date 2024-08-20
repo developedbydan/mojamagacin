@@ -5,15 +5,12 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  //   category: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Category",
-  //     required: true,
-  //   },
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
     required: true,
   },
+
   quantity: {
     type: Number,
     required: true,
@@ -28,6 +25,12 @@ const productSchema = new mongoose.Schema({
   //   },
   supplier: {
     type: String,
+    required: true,
+  },
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });
