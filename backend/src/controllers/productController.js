@@ -38,7 +38,8 @@ export const createProduct = async (req, res) => {
 // Dohvatanje svih proizvoda
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const userId = req.user._id;
+    const products = await Product.find({ user: userId });
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ message: "Greška pri odhvatanju proizvoda.", err });
