@@ -6,7 +6,7 @@ export const getCategories = async (req, res) => {
     const userId = req.user._id;
     const categories = await Category.find({ user: userId });
 
-    res.status(500).json(categories);
+    res.status(200).json(categories);
   } catch (err) {
     res.status(500).json({ message: "Greška pri odhvatanju kategorija.", err });
   }
@@ -38,7 +38,7 @@ export const createCategory = async (req, res) => {
 export const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const name = req.body;
+    const { name } = req.body;
     const userId = req.user._id;
 
     const existingCategory = await Category.findOne({ _id: id, user: userId });
@@ -49,7 +49,7 @@ export const updateCategory = async (req, res) => {
 
     existingCategory.name = name || existingCategory.name;
 
-    const updatedCategory = existingCategory.save();
+    const updatedCategory = await existingCategory.save();
 
     res.status(200).json(updatedCategory);
   } catch (err) {
@@ -69,7 +69,7 @@ export const deleteCategory = async (req, res) => {
     });
 
     if (!deletedCategory) {
-      res.status(404).json({ message: "Kategorija nije pronađena." });
+      return res.status(404).json({ message: "Kategorija nije pronađena." });
     }
 
     res.status(200).json({ message: "Kategorija je uspešno obrisana." });
