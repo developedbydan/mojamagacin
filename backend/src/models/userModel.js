@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Products" }],
+  suppliers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Suppliers" }],
 });
 
 const User = mongoose.model("User", userSchema);

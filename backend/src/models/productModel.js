@@ -19,14 +19,15 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  //   supplier: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Supplier",
-  //   },
   supplier: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Supplier",
     required: true,
   },
+  // supplier: {
+  //   type: String,
+  //   required: true,
+  // },
 
   user: {
     type: mongoose.Schema.Types.ObjectId,
