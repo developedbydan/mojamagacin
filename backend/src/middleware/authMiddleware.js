@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve("src/.env") });
 const jwtSecret = process.env.JWT_SECRET;
 
 export const authMiddleware = async (req, res, next) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
+  const token = req.cookies.token;
 
   if (!token) {
     res.status(401).json({ message: "Access Denied. No token provided." });

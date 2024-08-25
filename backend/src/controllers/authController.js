@@ -20,7 +20,7 @@ export const registerUser = async (req, res) => {
     // Provera da li korisnik već postoji
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already registered." });
+      return res.status(400).json({ message: "Email je već u upotrebi." });
     }
 
     // Generisanje salt-a za hashovanje lozinke
@@ -45,8 +45,8 @@ export const registerUser = async (req, res) => {
     // Vraćanje odgovora sa tokenom
     res.status(201).json({ token });
   } catch (err) {
-    console.error("Error during registration:", err);
-    res.status(500).json({ message: "Registration failed.", err });
+    console.error("Greška tokom registracije", err);
+    res.status(500).json({ message: "Registracija nije uspešna", err });
   }
 };
 
@@ -56,18 +56,39 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password." });
+      return res.status(400).json({ message: "Pogrešan email ili lozinka" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or passowrd." });
+      return res.status(400).json({ message: "Pogrešan email ili lozinka" });
     }
 
     const token = jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: "1h" });
 
-    res.status(200).json({ token });
+    // Postavljanje tokena u HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600000, // 1 sat
+    });
+
+    res.status(200).json({ message: "Uspešna prijava" });
   } catch (err) {
-    res.status(500).json({ message: "Login failed.", err });
+    res.status(500).json({ message: "Prijava nije uspešna", err });
+  }
+};
+
+export const logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.status(200).json({ message: "Uspešna odjava" });
+  } catch (err) {
+    res.status(500).json({ message: "Odjava nije uspešna.", err });
   }
 };
