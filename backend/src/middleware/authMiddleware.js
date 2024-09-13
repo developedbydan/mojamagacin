@@ -4,20 +4,21 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: path.resolve("src/.env") });
 
-const jwtSecret = process.env.JWT_SECRET;
-
-export const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+export const authMiddleware = (req, res, next) => {
+  const token = req.cookies.access_token;
 
   if (!token) {
-    res.status(401).json({ message: "Access Denied. No token provided." });
+    return res
+      .status(401)
+      .json({ message: "Pristup odbijen. Token nije dostavljen." });
   }
 
-  try {
-    const decoded = jwt.verify(token, jwtSecret);
-    req.user = decoded;
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+    if (err) {
+      return res.status(403).json({ message: "Neispravan token." });
+    }
+
+    req.user = { id: payload.id };
     next();
-  } catch (err) {
-    res.status(400).json({ message: "Invalid token.", err });
-  }
+  });
 };

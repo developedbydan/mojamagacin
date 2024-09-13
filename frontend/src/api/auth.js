@@ -23,3 +23,15 @@ export const logout = async () => {
     throw err;
   }
 };
+
+export const refreshAccessToken = async () => {
+  try {
+    await axios.post(
+      `${API_URL}/auth//refresh-token`,
+      {},
+      { withCredentials: true }
+    );
+  } catch (err) {
+    console.error("Osvežavanje access tokena nije uspelo", err);
+  }
+};
