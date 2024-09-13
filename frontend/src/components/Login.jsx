@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth.js";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,12 +18,6 @@ const Login = ({ setIsLoggedIn }) => {
 
     try {
       await login(email, password);
-      console.log("Ulogovan");
-
-      // Azuriranje stanja u App
-      setIsLoggedIn(true);
-
-      // Preusmeravanje na dashboard
       navigate("/");
     } catch (err) {
       if (err.response && err.response.data) {
@@ -34,6 +29,7 @@ const Login = ({ setIsLoggedIn }) => {
       }
     }
   };
+
   return (
     <div className="flex flex-col  items-center w-full h-lvh bg-slate-950">
       <div className=" flex flex-col  items-center w-68  mt-40 bg-slate-900 p-10 rounded-xl">
