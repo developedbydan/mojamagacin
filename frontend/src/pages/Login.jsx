@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth.js";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
@@ -31,8 +29,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col  items-center w-full h-lvh bg-slate-950">
-      <div className=" flex flex-col  items-center w-68  mt-40 bg-slate-900 p-10 rounded-xl">
+    <div className="flex flex-col  items-center  h-lvh bg-primary w-full ">
+      <div className=" flex flex-col  items-center w-68  mt-40 bg-secondary p-10 rounded-xl">
         <h2 className="text-2xl text-white font-semibold  mb-12">MojMagacin</h2>
         <form onSubmit={handleLogin} className="flex flex-col items-center">
           <div className="w-full mb-8">
@@ -68,10 +66,10 @@ const Login = () => {
 
           <Button
             type="submit"
-            bg="blue.700"
+            bg="#3686FF"
             marginTop="8"
             color="white"
-            _hover={{ bg: "white", color: "blue.700" }}
+            _hover={{ bg: "#1472FF", color: "white" }}
           >
             Prijavi se
           </Button>

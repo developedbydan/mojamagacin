@@ -38,7 +38,7 @@ export const createProduct = async (req, res) => {
 // Dohvatanje svih proizvoda
 export const getAllProducts = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
     const products = await Product.find({ user: userId });
     res.status(200).json(products);
   } catch (err) {
