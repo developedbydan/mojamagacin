@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: path.resolve("src/.env") });
 
+// TODO: JWT
 export const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -132,4 +133,20 @@ export const refreshToken = (req, res) => {
 
     res.status(200).json({ message: "Access token obnovljen." });
   });
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("username");
+
+    if (!user) {
+      return res(404).json({ message: "Korisnik nije poronađen." });
+    }
+
+    res.status(200).json({ username: user.username });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Greška prilikom dobavljanja korisničkih podataka." });
+  }
 };
