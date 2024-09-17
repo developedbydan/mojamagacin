@@ -1,24 +1,11 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { logout, refreshAccessToken } from "../api/auth.js";
+import { refreshAccessToken } from "../api/auth.js";
 import MonthStats from "../components/MonthStats.jsx";
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    try {
-      await logout();
-      navigate("/login");
-    } catch (err) {
-      console.log("Greška pri odjvaljivanju", err);
-    }
-  };
-
   useEffect(() => {
     refreshAccessToken();
   }, []);
@@ -40,13 +27,6 @@ const Dashboard = () => {
       </Breadcrumb>
 
       <MonthStats />
-
-      <button
-        className="text-white bg-red-700 p-3 rounded-md"
-        onClick={handleLogout}
-      >
-        Odjavi se
-      </button>
     </div>
   );
 };

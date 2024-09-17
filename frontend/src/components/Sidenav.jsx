@@ -27,7 +27,7 @@ const Sidenav = () => {
           MojMagacin
         </h1>
         <NavLink
-          to="/"
+          to="/kontrolna-tabla"
           className={({ isActive }) =>
             isActive
               ? "text-white py-2 pl-2 pr-20 bg-button rounded-md font-bold  text-sm mb-3 cursor-pointer"
