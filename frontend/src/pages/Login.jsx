@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth.js";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 
-const Login = () => {
+// eslint-disable-next-line react/prop-types
+const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,7 +17,8 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate("/");
+      setIsAuthenticated(true);
+      navigate("/kontrolna-tabla");
     } catch (err) {
       if (err.response && err.response.data) {
         setError(

@@ -7,6 +7,7 @@ import {
   DeleteIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import AddProduct from "../components/AddProduct.jsx";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -101,6 +102,7 @@ const Products = () => {
           </h3>
         )}
       </div>
+      <AddProduct />
     </div>
   );
 };
