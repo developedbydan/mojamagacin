@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { getUser } from "../api/auth";

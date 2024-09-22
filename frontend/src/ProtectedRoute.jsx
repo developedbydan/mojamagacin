@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ authStatus, children }) => {
-  console.log("isAuthenticated:", authStatus); // Proverite vrednost
+  console.log("isAuthenticated:", authStatus);
 
   if (!authStatus) {
     console.log("Preusmeravanje na login stranicu...");

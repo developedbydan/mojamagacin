@@ -16,7 +16,6 @@ export const login = async (email, password) => {
     throw err;
   }
 };
-
 export const logout = async () => {
   try {
     await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
@@ -33,8 +32,7 @@ export const refreshAccessToken = async () => {
       {},
       { withCredentials: true }
     );
-    console.log("Odgovor pri osvežavanju tokena:", response.data);
-    return response.data; // Pretpostavljamo da vraća neki podatak, može biti i samo potvrda
+    return response.data;
   } catch (err) {
     console.error("Osvežavanje access tokena nije uspelo", err);
     throw err;

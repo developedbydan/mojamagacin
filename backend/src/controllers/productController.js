@@ -50,7 +50,7 @@ export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, category, quantity, price, supplier } = req.body;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     // Provera da li proizvod postoji i pripada trenutnom korisniku
     const existingProduct = await Product.findOne({ _id: id, user: userId });
@@ -82,7 +82,7 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const deletedProduct = await Product.findOneAndDelete({
       _id: id,
@@ -93,7 +93,7 @@ export const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: "Proizvod nije pronađen." });
     }
 
-    res.status(200).json({ message: "Proizvod je uspešno obrisan." });
+    res.status(200).json({ message: "Proizvod je uspešno obrisan ." });
   } catch (err) {
     res.status(500).json({ message: "Greška pri brisanju proizvoda.", err });
   }

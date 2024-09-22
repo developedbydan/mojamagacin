@@ -8,7 +8,6 @@ export const getAllCategories = async () => {
     const res = await axios.get(`${API_URL}/categories`, {
       withCredentials: true,
     });
-
     return res.data;
   } catch (err) {
     throw err;

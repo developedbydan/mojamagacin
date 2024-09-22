@@ -17,7 +17,7 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
-  const location = useLocation(); // Hook za praćenje trenutne putanje
+  const location = useLocation();
 
   // Lista ruta za Sidenav
   const routesWithSidenav = [
@@ -38,7 +38,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
 
-        {/* Zaštićene rute */}
         <Route path="/kontrolna-tabla" element={<Dashboard />} />
         <Route
           path="/magacin"
@@ -72,8 +71,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-
-        {/* Za nepostojece rute */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
