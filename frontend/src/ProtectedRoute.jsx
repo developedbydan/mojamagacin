@@ -1,14 +1,13 @@
 import { Navigate } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
-const ProtectedRoute = ({ authStatus, children }) => {
-  console.log("isAuthenticated:", authStatus);
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
-  if (!authStatus) {
-    console.log("Preusmeravanje na login stranicu...");
-    return <Navigate to="/" />;
-  }
-  return children;
+// eslint-disable-next-line react/prop-types
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useContext(AuthContext);
+
+  return isAuthenticated ? children : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

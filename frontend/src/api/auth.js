@@ -10,7 +10,6 @@ export const login = async (email, password) => {
       { email, password },
       { withCredentials: true }
     );
-    localStorage.setItem("isAuthenticated", "true");
     return res;
   } catch (err) {
     throw err;
@@ -19,7 +18,6 @@ export const login = async (email, password) => {
 export const logout = async () => {
   try {
     await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
-    localStorage.removeItem("isAuthenticated");
   } catch (err) {
     throw err;
   }

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth.js";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 const Login = () => {
+  const { setIsAuthenticated } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,6 +18,7 @@ const Login = () => {
 
     try {
       await login(email, password);
+      setIsAuthenticated(true);
       navigate("/kontrolna-tabla");
     } catch (err) {
       if (err.response && err.response.data) {

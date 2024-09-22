@@ -4,53 +4,72 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Products from "./pages/Products.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
 import Account from "./pages/Account.jsx";
 import Settings from "./pages/Settings.jsx";
-
+import AddProduct from "./pages/AddProduct.jsx";
 import Sidenav from "./components/Sidenav.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 const App = () => {
   const location = useLocation();
+  const { isAuthenticated } = useContext(AuthContext);
 
   // Lista ruta za Sidenav
   const routesWithSidenav = [
     "/kontrolna-tabla",
-    "/magacin",
     "/dobavljaci",
     "/nalog",
     "/podesavanja",
+    "/magacin",
+    "/dodaj-proizvod",
   ];
 
   const showSideNav = routesWithSidenav.includes(location.pathname);
-  const authStatus = localStorage.getItem("isAuthenticated");
 
   return (
     <div className="h-lvh flex">
-      {showSideNav && authStatus ? <Sidenav authStatus={authStatus} /> : null}
+      {showSideNav && isAuthenticated ? (
+        <Sidenav authStatus={isAuthenticated} />
+      ) : null}
 
       <Routes>
         <Route path="/" element={<Login />} />
 
-        <Route path="/kontrolna-tabla" element={<Dashboard />} />
+        <Route
+          path="/kontrolna-tabla"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/magacin"
           element={
-            <ProtectedRoute authStatus={authStatus}>
-              <Products authStatus={authStatus} />
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dodaj-proizvod"
+          element={
+            <ProtectedRoute>
+              <AddProduct />
             </ProtectedRoute>
           }
         />
         <Route
           path="/dobavljaci"
           element={
-            <ProtectedRoute authStatus={authStatus}>
+            <ProtectedRoute>
               <Suppliers />
             </ProtectedRoute>
           }
@@ -58,7 +77,7 @@ const App = () => {
         <Route
           path="/nalog"
           element={
-            <ProtectedRoute authStatus={authStatus}>
+            <ProtectedRoute>
               <Account />
             </ProtectedRoute>
           }
@@ -66,7 +85,7 @@ const App = () => {
         <Route
           path="/podesavanja"
           element={
-            <ProtectedRoute authStatus={authStatus}>
+            <ProtectedRoute>
               <Settings />
             </ProtectedRoute>
           }

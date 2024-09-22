@@ -5,7 +5,7 @@ import { getUser } from "../api/auth";
 import { UserCircle } from "@phosphor-icons/react";
 
 // eslint-disable-next-line react/prop-types
-const Sidenav = ({ authStatus }) => {
+const Sidenav = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -17,9 +17,8 @@ const Sidenav = ({ authStatus }) => {
         console.log("Greška prilikom dobavljanja korisničkog imena.", err);
       }
     };
-    if (authStatus) {
-      getUsername();
-    }
+
+    getUsername();
   }, []);
 
   return (
