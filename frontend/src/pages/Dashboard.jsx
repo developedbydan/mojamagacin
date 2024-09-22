@@ -1,15 +1,9 @@
-import { useEffect } from "react";
-import { refreshAccessToken } from "../api/auth.js";
 import MonthStats from "../components/MonthStats.jsx";
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 const Dashboard = () => {
-  useEffect(() => {
-    refreshAccessToken();
-  }, []);
-
   return (
     <div className=" bg-primary w-10/12 px-10 pt-10 pb-20 ">
       <Breadcrumb

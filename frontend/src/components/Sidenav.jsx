@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import { getUser } from "../api/auth";
 import { UserCircle } from "@phosphor-icons/react";
 
-const Sidenav = () => {
+// eslint-disable-next-line react/prop-types
+const Sidenav = ({ authStatus }) => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -11,13 +12,13 @@ const Sidenav = () => {
       try {
         const res = await getUser();
         setUsername(res.username);
-        console.log(res.username);
       } catch (err) {
         console.log("Greška prilikom dobavljanja korisničkog imena.", err);
       }
     };
-
-    getUsername();
+    if (authStatus) {
+      getUsername();
+    }
   }, []);
 
   return (

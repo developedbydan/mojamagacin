@@ -10,6 +10,7 @@ export const login = async (email, password) => {
       { email, password },
       { withCredentials: true }
     );
+    localStorage.setItem("isAuthenticated", "true");
     return res;
   } catch (err) {
     throw err;
@@ -19,6 +20,7 @@ export const login = async (email, password) => {
 export const logout = async () => {
   try {
     await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
+    localStorage.removeItem("isAuthenticated");
   } catch (err) {
     throw err;
   }
@@ -26,13 +28,16 @@ export const logout = async () => {
 
 export const refreshAccessToken = async () => {
   try {
-    await axios.post(
+    const response = await axios.post(
       `${API_URL}/auth/refresh-token`,
       {},
       { withCredentials: true }
     );
+    console.log("Odgovor pri osvežavanju tokena:", response.data);
+    return response.data; // Pretpostavljamo da vraća neki podatak, može biti i samo potvrda
   } catch (err) {
     console.error("Osvežavanje access tokena nije uspelo", err);
+    throw err;
   }
 };
 
