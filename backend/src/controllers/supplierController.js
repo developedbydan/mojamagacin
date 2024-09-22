@@ -3,7 +3,7 @@ import Supplier from "../models/supplierModel.js";
 // Dohvatanje svih dobavljaca
 export const getSuppliers = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
     const suppliers = await Supplier.find({ user: userId });
 
     res.status(200).json(suppliers);
@@ -16,7 +16,7 @@ export const getSuppliers = async (req, res) => {
 export const createSupplier = async (req, res) => {
   try {
     const { name, address, contact } = req.body;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const existingSupplier = await Supplier.findOne({
       name: name,
@@ -48,7 +48,7 @@ export const updateSupplier = async (req, res) => {
   try {
     const { name, address, contact } = req.body;
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const existingSupplier = await Supplier.findOne({ _id: id, user: userId });
     if (!existingSupplier) {
@@ -71,7 +71,7 @@ export const updateSupplier = async (req, res) => {
 export const deleteSupplier = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const deletedSupplier = await Supplier.findOneAndDelete({
       _id: id,

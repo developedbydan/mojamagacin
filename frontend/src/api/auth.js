@@ -33,8 +33,7 @@ export const refreshAccessToken = async () => {
       {},
       { withCredentials: true }
     );
-    console.log("Odgovor pri osvežavanju tokena:", response.data);
-    return response.data; // Pretpostavljamo da vraća neki podatak, može biti i samo potvrda
+    return response.data;
   } catch (err) {
     console.error("Osvežavanje access tokena nije uspelo", err);
     throw err;
