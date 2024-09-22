@@ -9,9 +9,9 @@ import {
   DeleteIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import AddProduct from "../components/AddProduct.jsx";
+import { Link } from "react-router-dom";
 
-const Products = ({ authStatus }) => {
+const Products = () => {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
@@ -24,9 +24,7 @@ const Products = ({ authStatus }) => {
   };
 
   useEffect(() => {
-    if (authStatus) {
-      fetchProducts();
-    }
+    fetchProducts();
   }, []);
   return (
     <div className=" bg-primary w-10/12  px-10 pt-10 pb-20 text-white  ">
@@ -50,12 +48,12 @@ const Products = ({ authStatus }) => {
               <h4 className="font-meidum text-2xl font-semibold text-left mb-7">
                 Tabela Proizvoda
               </h4>
-              <div>
+              <Link to={"/dodaj-proizvod"}>
                 <SmallAddIcon
                   boxSize={8}
                   className="bg-button rounded-full cursor-pointer hover:bg-blue-600"
                 />
-              </div>
+              </Link>
             </div>
             <table className="w-full text-base  text-gray-500 dark:text-gray-400">
               <thead>
@@ -106,7 +104,6 @@ const Products = ({ authStatus }) => {
           </h3>
         )}
       </div>
-      <AddProduct />
     </div>
   );
 };

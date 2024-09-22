@@ -1,10 +1,12 @@
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../api/categories";
+import { getAllSuppliers } from "../api/suppliers";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
 
   const fetchCategories = async () => {
     try {
@@ -15,14 +17,27 @@ const AddProduct = () => {
     }
   };
 
+  const fetchSuppliers = async () => {
+    try {
+      const data = await getAllSuppliers();
+      setSuppliers(data);
+    } catch (err) {
+      console.error("Greška prilikom dobavljanja dobavljača", err);
+    }
+  };
+
   useEffect(() => {
     fetchCategories();
+    fetchSuppliers();
   }, []);
 
   return (
-    <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 bg-secondary w-1/3  rounded-xl px-10 py-8 border border-yellow-300 ">
-      <h1 className="text-center text-2xl font-bold mb-10">Novi Proizvod</h1>
-      <form action="POST" className="flex flex-col gap-5">
+    <div className="bg-primary w-10/12 px-10   text-white flex justify-center items-center ">
+      <form
+        action="POST"
+        className="flex flex-col gap-5 w-1/2 py-16 px-10 bg-secondary rounded-xl"
+      >
+        <h2 className="text-center text-2xl font-bold mb-10">Novi Proizvod</h2>
         <input
           placeholder="Naziv"
           type="text"
@@ -37,11 +52,18 @@ const AddProduct = () => {
           placeholder="Kategorija"
           className="bg-highlight cursor-pointer py-2 px-3 rounded-md border-none focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
-          <option value="" disabled selected hidden>
-            Odaberi kategoriju
-          </option>
           {categories.map((category) => (
             <option key={category._id}>{category.name}</option>
+          ))}
+        </select>
+        <select
+          name="suppliers"
+          id="suppliers"
+          placeholder="Dobavljač"
+          className="bg-highlight cursor-pointer py-2 px-3 rounded-md border-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+        >
+          {suppliers.map((supplier) => (
+            <option key={supplier._id}>{supplier.name}</option>
           ))}
         </select>
         <Button
