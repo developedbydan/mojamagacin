@@ -3,7 +3,7 @@ import Category from "../models/categoryModel.js";
 // Dohvatanje svih kategorija
 export const getCategories = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
     const categories = await Category.find({ user: userId });
 
     res.status(200).json(categories);
@@ -18,7 +18,7 @@ export const createCategory = async (req, res) => {
     const { name } = req.body;
 
     // Korisnicki id
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const newCategory = new Category({
       name: name,
@@ -39,7 +39,7 @@ export const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const existingCategory = await Category.findOne({ _id: id, user: userId });
 
@@ -61,7 +61,7 @@ export const updateCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     const deletedCategory = await Category.findOneAndDelete({
       _id: id,

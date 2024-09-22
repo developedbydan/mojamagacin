@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../api/products.js";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
@@ -9,7 +10,7 @@ import {
 } from "@chakra-ui/icons";
 import AddProduct from "../components/AddProduct.jsx";
 
-const Products = () => {
+const Products = ({ authStatus }) => {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
@@ -22,7 +23,9 @@ const Products = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    if (authStatus) {
+      fetchProducts();
+    }
   }, []);
   return (
     <div className=" bg-primary w-10/12  px-10 pt-10 pb-20 text-white  ">

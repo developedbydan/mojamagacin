@@ -84,7 +84,7 @@ export const loginUser = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dana
     });
 
-    res.status(200).json({ username: user.username });
+    res.status(200).json({ username: user.username, token: accessToken });
   } catch (err) {
     res.status(500).json({ message: "Prijava nije uspešna", err });
   }

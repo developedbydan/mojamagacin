@@ -4,7 +4,6 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useState } from "react";
 
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -19,7 +18,6 @@ import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
   const location = useLocation(); // Hook za praćenje trenutne putanje
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Lista ruta za Sidenav
   const routesWithSidenav = [
@@ -31,38 +29,29 @@ const App = () => {
   ];
 
   const showSideNav = routesWithSidenav.includes(location.pathname);
+  const authStatus = localStorage.getItem("isAuthenticated");
 
   return (
     <div className="h-lvh flex">
-      {showSideNav && <Sidenav />}
+      {showSideNav && authStatus ? <Sidenav authStatus={authStatus} /> : null}
 
       <Routes>
-        <Route
-          path="/"
-          element={<Login setIsAuthenticated={setIsAuthenticated} />}
-        />
+        <Route path="/" element={<Login />} />
 
         {/* Zaštićene rute */}
-        <Route
-          path="/kontrolna-tabla"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/kontrolna-tabla" element={<Dashboard />} />
         <Route
           path="/magacin"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Products />
+            <ProtectedRoute authStatus={authStatus}>
+              <Products authStatus={authStatus} />
             </ProtectedRoute>
           }
         />
         <Route
           path="/dobavljaci"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute authStatus={authStatus}>
               <Suppliers />
             </ProtectedRoute>
           }
@@ -70,15 +59,15 @@ const App = () => {
         <Route
           path="/nalog"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Account setIsAuthenticated={setIsAuthenticated} />
+            <ProtectedRoute authStatus={authStatus}>
+              <Account />
             </ProtectedRoute>
           }
         />
         <Route
           path="/podesavanja"
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute authStatus={authStatus}>
               <Settings />
             </ProtectedRoute>
           }

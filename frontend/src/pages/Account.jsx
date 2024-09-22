@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { logout } from "../api/auth.js";
 
-// eslint-disable-next-line react/prop-types
-const Account = ({ setIsAuthenticated }) => {
+const Account = () => {
   const navigate = useNavigate();
 
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
       await logout();
-      setIsAuthenticated(false);
+
       navigate("/");
     } catch (err) {
       console.log("Greška pri odjvaljivanju", err);
