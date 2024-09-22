@@ -12,7 +12,7 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Pogrešan email ili lozinka" });
+      return res.status(400).json({ message: "Pogrešan email ili lozinka." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);

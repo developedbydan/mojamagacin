@@ -93,7 +93,7 @@ export const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: "Proizvod nije pronađen." });
     }
 
-    res.status(200).json({ message: "Proizvod je uspešno obrisan." });
+    res.status(200).json({ message: "Proizvod je uspešno obrisan ." });
   } catch (err) {
     res.status(500).json({ message: "Greška pri brisanju proizvoda.", err });
   }

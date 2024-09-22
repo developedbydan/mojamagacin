@@ -8,6 +8,7 @@ export const getAllProducts = async () => {
     const res = await axios.get(`${API_URL}/products`, {
       withCredentials: true,
     });
+
     return res.data;
   } catch (err) {
     throw err;

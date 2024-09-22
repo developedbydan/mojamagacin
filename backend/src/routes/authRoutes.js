@@ -2,8 +2,8 @@ import express from "express";
 import {
   getUser,
   loginUser,
-  logoutUser,
   refreshToken,
+  logoutUser,
 } from "../controllers/authController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
