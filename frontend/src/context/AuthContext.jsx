@@ -1,29 +1,28 @@
 import { createContext, useState, useEffect } from "react";
-import { refreshAccessToken } from "../api/auth";
+import { checkAuthStatus, refreshAccessToken } from "../api/auth";
 
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      // Proveri autentifikaciju
-      const tokenExists = document.cookie.includes("access_token");
-      setIsAuthenticated(tokenExists);
+    const verifyAuth = async () => {
+      const authStatus = await checkAuthStatus();
+      setIsAuthenticated(authStatus);
     };
 
-    checkAuthStatus();
+    verifyAuth();
 
     const intervalId = setInterval(async () => {
       try {
-        await refreshAccessToken(); // Osvezi token
+        await refreshAccessToken();
       } catch (err) {
         console.error("Greška pri osvežavanju tokena", err);
         setIsAuthenticated(false);
       }
-    }, 14 * 60 * 1000); // Svakih 14 minuta
+    }, 14 * 60 * 1000);
 
     return () => clearInterval(intervalId);
   }, []);
