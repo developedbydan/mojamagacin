@@ -14,3 +14,15 @@ export const getAllProducts = async () => {
     throw err;
   }
 };
+
+export const addProduct = async (productData) => {
+  try {
+    const response = await axios.post(`${API_URL}/products`, productData, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error("Greška pri dodavanju proizvoda", err.response.data);
+    throw err;
+  }
+};
