@@ -47,3 +47,15 @@ export const getUser = async () => {
     throw err;
   }
 };
+
+export const checkAuthStatus = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/auth/status`, {
+      withCredentials: true,
+    });
+    return response.data.isAuthenticated;
+  } catch (err) {
+    console.error("Greška pri proveri autentifikacije", err);
+    return false;
+  }
+};

@@ -112,3 +112,18 @@ export const getUser = async (req, res) => {
       .json({ message: "Greška prilikom dobavljanja korisničkih podataka." });
   }
 };
+
+export const checkAuthStatus = (req, res) => {
+  const accessToken = req.cookies.access_token;
+
+  if (!accessToken) {
+    return res.status(401).json({ isAuthenticated: false });
+  }
+
+  jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+    if (err) {
+      return refreshToken.status(401).json({ isAuthenticated: false });
+    }
+    return res.status(200).json({ isAuthenticated: true });
+  });
+};
