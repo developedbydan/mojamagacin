@@ -7,7 +7,7 @@ export const createProduct = async (req, res) => {
     const { name, category, quantity, price, supplier } = req.body;
 
     // Korisnicki id
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     //Provera kategorije
     const categoryDoc = await Category.findOne({ _id: category, user: userId });
