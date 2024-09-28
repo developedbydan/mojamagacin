@@ -27,7 +27,7 @@ const Products = () => {
     fetchProducts();
   }, []);
   return (
-    <div className=" bg-primary w-10/12  px-10 pt-10 pb-20 text-white  ">
+    <div className=" bg-primary w-10/12  px-10 pt-10 pb-20 text-white overflow-y-auto">
       <Breadcrumb
         spacing="8px"
         separator={<ChevronRightIcon color="gray.500" />}

@@ -1,10 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { getUser } from "../api/auth";
 import { UserCircle } from "@phosphor-icons/react";
 
-// eslint-disable-next-line react/prop-types
 const Sidenav = () => {
   const [username, setUsername] = useState("");
 
@@ -73,7 +71,7 @@ const Sidenav = () => {
 
         <NavLink
           to="/nalog"
-          className="text-slate-400 py-4 pl-5 pr-20 font-medium text-sm mb-3 cursor-pointer mt-auto rounded-xl flex items-center gap-2 bg-highlight"
+          className="text-slate-400 py-4 pl-5 pr-15 t font-medium text-sm mb-3 cursor-pointer mt-auto rounded-xl flex items-center gap-2 bg-highlight"
         >
           <UserCircle size={22} />
           {username}

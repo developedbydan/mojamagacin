@@ -32,8 +32,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col  items-center  h-lvh bg-primary w-full ">
-      <div className=" flex flex-col  items-center w-68  mt-40 bg-secondary p-10 rounded-xl">
+    <div className="flex flex-col pt-52 items-center  h-lvh bg-primary w-full ">
+      <div className=" flex flex-col  items-center w-68   bg-secondary p-10 rounded-xl">
         <h2 className="text-2xl text-white font-semibold  mb-12">MojMagacin</h2>
         <form onSubmit={handleLogin} className="flex flex-col items-center">
           <div className="w-full mb-8">

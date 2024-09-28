@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../api/categories";
 import { getAllSuppliers } from "../api/suppliers";
+import { addProduct } from "../api/products";
 
 import {
   NumberInput,
@@ -9,8 +10,11 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
+  useToast,
 } from "@chakra-ui/react";
-import { addProduct } from "../api/products";
+
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -22,6 +26,8 @@ const AddProduct = () => {
   const [categories, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
 
+  const navigate = useNavigate();
+  const toast = useToast();
   const parse = (val) => val.replace(/^\$/, "");
 
   const fetchCategories = async () => {
@@ -42,6 +48,17 @@ const AddProduct = () => {
     }
   };
 
+  const successToast = () => {
+    toast({
+      title: "Proizvod je dodat",
+      description: "Uspešno ste dodali novi proizvod u magacin",
+      status: "success",
+      position: "top-right",
+      duration: 6000,
+      isClosable: true,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,7 +72,7 @@ const AddProduct = () => {
 
     try {
       await addProduct(productData);
-      alert("Proizvod uspešno dodat!");
+      successToast();
       setName("");
       setCategory("");
       setQuantity("1");
@@ -72,7 +89,13 @@ const AddProduct = () => {
   }, []);
 
   return (
-    <div className="bg-primary w-10/12 px-10   text-white flex justify-center items-center ">
+    <div className="bg-primary w-full px-10   text-white flex justify-center items-center ">
+      <ArrowBackIcon
+        boxSize={8}
+        className="absolute top-16 left-14 cursor-pointer"
+        onClick={() => navigate(-1)}
+      />
+
       <form
         action="POST"
         onSubmit={handleSubmit}

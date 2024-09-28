@@ -28,13 +28,12 @@ const App = () => {
     "/nalog",
     "/podesavanja",
     "/magacin",
-    "/dodaj-proizvod",
   ];
 
   const showSideNav = routesWithSidenav.includes(location.pathname);
 
   return (
-    <div className="h-lvh flex">
+    <div className="h-lvh flex overflow-hidden">
       {showSideNav && isAuthenticated ? (
         <Sidenav authStatus={isAuthenticated} />
       ) : null}
