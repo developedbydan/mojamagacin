@@ -1,25 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../api/categories";
 import { getAllSuppliers } from "../api/suppliers";
 import { addProduct } from "../api/products";
 
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Button,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("1");
-  const [quantity, setQuantity] = useState("1");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState();
   const [category, setCategory] = useState("");
   const [supplier, setSupplier] = useState("");
 
@@ -28,7 +21,6 @@ const AddProduct = () => {
 
   const navigate = useNavigate();
   const toast = useToast();
-  const parse = (val) => val.replace(/^\$/, "");
 
   const fetchCategories = async () => {
     try {
@@ -53,7 +45,7 @@ const AddProduct = () => {
       title: "Proizvod je dodat",
       description: "Uspešno ste dodali novi proizvod u magacin",
       status: "success",
-      position: "top-right",
+      position: "bottom-right",
       duration: 6000,
       isClosable: true,
     });
@@ -75,8 +67,8 @@ const AddProduct = () => {
       successToast();
       setName("");
       setCategory("");
-      setQuantity("1");
-      setPrice("1");
+      setQuantity("");
+      setPrice("");
       setSupplier("");
     } catch (err) {
       console.error("Greška pri dodavanju proizvoda:", err);
@@ -84,9 +76,22 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    fetchCategories();
-    fetchSuppliers();
+    const fetchData = async () => {
+      await fetchCategories();
+      await fetchSuppliers();
+    };
+
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (categories.length > 0 && !category) {
+      setCategory(categories[0]._id); // postavi prvu kategoriju kao default
+    }
+    if (suppliers.length > 0 && !supplier) {
+      setSupplier(suppliers[0]._id); // postavi prvog dobavljača kao default
+    }
+  }, [categories, suppliers]);
 
   return (
     <div className="bg-primary w-full px-10   text-white flex justify-center items-center ">
@@ -125,33 +130,33 @@ const AddProduct = () => {
           ))}
         </select>
 
-        <NumberInput
-          defaultValue={1}
-          min={1}
-          max={999}
-          onChange={(quantityString) => setQuantity(parse(quantityString))}
-          value={quantity}
-        >
-          <NumberInputField bg="#161f40" border="none" />
-          <NumberInputStepper>
-            <NumberIncrementStepper color="white" border="none" />
-            <NumberDecrementStepper color="white" border="none" />
-          </NumberInputStepper>
-        </NumberInput>
+        <div className=" relative text-white bg-highlight  rounded-md border-none ">
+          <input
+            type="number"
+            min={1}
+            name="quantity"
+            value={quantity}
+            required
+            placeholder="Količina"
+            onChange={(e) => setQuantity(e.target.value)}
+            className="text-white bg-highlight py-2 px-3 w-full border-none focus:outline-none rounded-md focus:ring-1 focus:ring-blue-500"
+          />
+          <p className="absolute top-2 right-3 text-gray-300 ">kom</p>
+        </div>
 
-        <NumberInput
-          defaultValue={1}
-          min={1}
-          max={99999}
-          onChange={(priceString) => setPrice(parse(priceString))}
-          value={price}
-        >
-          <NumberInputField bg="#161f40" border="none" />
-          <NumberInputStepper>
-            <NumberIncrementStepper color="white" border="none" />
-            <NumberDecrementStepper color="white" border="none" />
-          </NumberInputStepper>
-        </NumberInput>
+        <div className=" relative text-white bg-highlight  rounded-md border-none ">
+          <input
+            min={1}
+            name="price"
+            type="number"
+            value={price}
+            required
+            placeholder="Cena"
+            onChange={(e) => setPrice(e.target.value)}
+            className="text-white bg-highlight py-2 px-3 w-full border-none focus:outline-none rounded-md focus:ring-1 focus:ring-blue-500"
+          />
+          <p className="absolute top-2 right-3 text-gray-300 ">din</p>
+        </div>
 
         <select
           name="suppliers"

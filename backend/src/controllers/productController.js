@@ -49,7 +49,7 @@ export const getAllProducts = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, category, quantity, price, supplier } = req.body;
+    const { name, quantity, price } = req.body;
     const userId = req.user.id;
 
     // Provera da li proizvod postoji i pripada trenutnom korisniku
@@ -59,17 +59,9 @@ export const updateProduct = async (req, res) => {
       return res.status(400).json({ message: "Proizvod nije pronađen." });
     }
 
-    // Provera kategorije ako se azurira
-    const categoryDoc = await Category.findOne({ _id: category, user: userId });
-    if (!categoryDoc) {
-      return res.status(400).json({ message: "Kategorija nije validna." });
-    }
-
     existingProduct.name = name || existingProduct.name;
-    existingProduct.category = category || existingProduct.category;
     existingProduct.quantity = quantity || existingProduct.quantity;
     existingProduct.price = price || existingProduct.price;
-    existingProduct.supplier = supplier || existingProduct.supplier;
 
     const updatedProduct = await existingProduct.save();
 
@@ -96,5 +88,20 @@ export const deleteProduct = async (req, res) => {
     res.status(200).json({ message: "Proizvod je uspešno obrisan ." });
   } catch (err) {
     res.status(500).json({ message: "Greška pri brisanju proizvoda.", err });
+  }
+};
+
+export const getProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const product = await Product.findOne({ _id: id, user: userId });
+
+    if (!product) {
+      return res.status(404).json({ message: "Proizvod nije pronađen." });
+    }
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Greška pri odhvatanju proizvoda.", err });
   }
 };
