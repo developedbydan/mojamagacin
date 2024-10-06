@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../api/products.js";
+import { deleteProduct, getAllProducts } from "../api/products.js";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import {
   SmallAddIcon,
@@ -9,9 +7,11 @@ import {
   DeleteIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
@@ -21,6 +21,21 @@ const Products = () => {
     } catch (err) {
       console.error("Greška prilikom dobavljanja proizvoda", err);
     }
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      await deleteProduct(productId);
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== productId)
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleEditClick = (id) => {
+    navigate(`/azuriraj-proizvod/${id}`);
   };
 
   useEffect(() => {
@@ -86,10 +101,13 @@ const Products = () => {
                         <EditIcon
                           color={"yellow.400"}
                           className="cursor-pointer"
+                          onClick={() => handleEditClick(product._id)}
                         />
+
                         <DeleteIcon
                           color={"red.700"}
                           className="cursor-pointer"
+                          onClick={() => handleDelete(product._id)}
                         />
                       </div>
                     </td>

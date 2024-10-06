@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Products from "./pages/Products.jsx";
@@ -11,6 +6,8 @@ import Suppliers from "./pages/Suppliers.jsx";
 import Account from "./pages/Account.jsx";
 import Settings from "./pages/Settings.jsx";
 import AddProduct from "./pages/AddProduct.jsx";
+import UpdateProduct from "./pages/UpdateProduct.jsx";
+
 import Sidenav from "./components/Sidenav.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import NotFound from "./pages/NotFound.jsx";
@@ -65,6 +62,16 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/azuriraj-proizvod/:id"
+          element={
+            <ProtectedRoute>
+              <UpdateProduct />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/dobavljaci"
           element={
@@ -95,10 +102,10 @@ const App = () => {
   );
 };
 
-const AppWrapper = () => (
-  <Router>
-    <App />
-  </Router>
-);
+// const AppWrapper = () => (
+//   <Router>
+//     <App />
+//   </Router>
+// );
 
-export default AppWrapper;
+export default App;

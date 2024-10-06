@@ -35,7 +35,7 @@ export const loginUser = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 15 * 60 * 1000, // 15 minuta
+      maxAge: 3 * 60 * 1000, // 15 minuta
     });
 
     // Postavi refresh token u HTTP-only kolacic
@@ -90,7 +90,7 @@ export const refreshToken = (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 15 * 60 * 1000, // 15 minuta
+      maxAge: 3 * 60 * 1000, // 15 minuta
     });
 
     res.status(200).json({ message: "Access token obnovljen." });
@@ -122,7 +122,7 @@ export const checkAuthStatus = (req, res) => {
 
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
     if (err) {
-      return refreshToken.status(401).json({ isAuthenticated: false });
+      return res.status(401).json({ isAuthenticated: false });
     }
     return res.status(200).json({ isAuthenticated: true });
   });
