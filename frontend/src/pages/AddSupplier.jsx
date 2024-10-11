@@ -91,7 +91,7 @@ const AddSupplier = () => {
           color="white"
           _hover={{ bg: "#1472FF", color: "white" }}
         >
-          Dodaj Proizvod
+          Dodaj Dobavljača
         </Button>
       </form>
     </div>
