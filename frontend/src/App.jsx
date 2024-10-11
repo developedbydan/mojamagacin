@@ -7,12 +7,14 @@ import Account from "./pages/Account.jsx";
 import Settings from "./pages/Settings.jsx";
 import AddProduct from "./pages/AddProduct.jsx";
 import UpdateProduct from "./pages/UpdateProduct.jsx";
+import UpdateSupplier from "./pages/UpdateSupplier.jsx";
 
 import Sidenav from "./components/Sidenav.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import AddSupplier from "./pages/AddSupplier.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -80,6 +82,25 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/dodaj-dobavljaca"
+          element={
+            <ProtectedRoute>
+              <AddSupplier />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/azuriraj-dobavljaca/:id"
+          element={
+            <ProtectedRoute>
+              <UpdateSupplier />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/nalog"
           element={

@@ -11,6 +11,7 @@ const supplierSchema = new mongoose.Schema({
   },
   contact: {
     type: String,
+    required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
